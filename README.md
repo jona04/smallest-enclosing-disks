@@ -6,8 +6,9 @@ Two algoritmos to solve the problem Smallest Enclosing Disks (SED):
 - Hearn Algorithm - based in "Smallest enclosing disks (balls and ellipsoids)", in Maurer, H. (ed.), New Results and New Trends in Computer Science, Lecture Notes in Computer Science, vol. 555, Springer-Verlag, pp. 359–370"
 
 ## Install
+```sh
 pip install requirements.txt
-
+```
 
 
 ## Generate data points
