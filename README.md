@@ -2,8 +2,8 @@
 ## _Welzl Algorithm and Hearn Algorithm_
 
 Two algoritmos to solve the problem Smallest Enclosing Disks (SED):
-- Welzl Algorithm - based on "D. Jack Elzinga, Donald W. Hearn, (1972) The Minimum Covering Sphere Problem. Management Science 19(1):96-104".
-- Hearn Algorithm - based in "Smallest enclosing disks (balls and ellipsoids)", in Maurer, H. (ed.), New Results and New Trends in Computer Science, Lecture Notes in Computer Science, vol. 555, Springer-Verlag, pp. 359–370"
+- Hearn Algorithm is based on "D. Jack Elzinga, Donald W. Hearn, (1972) The Minimum Covering Sphere Problem. Management Science 19(1):96-104".
+- Welzl Algorithm is based on "Smallest enclosing disks (balls and ellipsoids)", in Maurer, H. (ed.), New Results and New Trends in Computer Science, Lecture Notes in Computer Science, vol. 555, Springer-Verlag, pp. 359–370"
 
 ## Install
 ```sh
