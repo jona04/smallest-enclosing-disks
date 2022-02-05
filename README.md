@@ -1,14 +1,25 @@
-# smallest-enclosing-disks
-Two algoritmos to solve the problem Smallest Enclosing Disks (SED) - Welzl Algorithm and Quadratic Programming based algorithm
+# Smallest Enclosing Disks
+## _Welzl Algorithm and Hearn Algorithm_
 
-Install requirements.txt
+Two algoritmos to solve the problem Smallest Enclosing Disks (SED):
+- Welzl Algorithm - based on "D. Jack Elzinga, Donald W. Hearn, (1972) The Minimum Covering Sphere Problem. Management Science 19(1):96-104".
+- Hearn Algorithm - based in "Smallest enclosing disks (balls and ellipsoids)", in Maurer, H. (ed.), New Results and New Trends in Computer Science, Lecture Notes in Computer Science, vol. 555, Springer-Verlag, pp. 359–370"
+
+## Install
 pip install requirements.txt
 
-Generate data points
-python3 ./genarate_points.py <quantity of points>
 
-Usage
+
+## Generate data points
+```sh
+python3 ./genarate_points.py <quantity of points>
+```
+
+## Usage
+```sh
 python3 ./main.py <file-with-points>
+```
+
 
 In the main file there are all the code necessary to read the data file and to call both algorithms: Welzl Algorithm (recursive approach) and Hearn Algorithm (Quadratic programin approach).
 
