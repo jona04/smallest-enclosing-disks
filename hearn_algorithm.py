@@ -4,50 +4,6 @@ from math import sqrt
 from util import *
 
 
-def get_point_outside_of_the_circle(x,radius,ax_global,ay_global):
-    tuple_a = zip(ax_global, ay_global)
-    outside = []
-    for a in tuple_a:
-        if is_inside(x,radius, a) == False:
-            outside.append(a)
-    distance = 0;
-    idx = 0
-    for i,val in enumerate(outside):
-        aux_distance = dist(x,val)
-        if aux_distance > distance:
-            distance = aux_distance
-            idx = i
-    return outside.pop(idx)
-         
-def get_more_distant_point(x,points_list_global):
-    distance = 0
-    idx = 0
-    for i,val in enumerate(points_list_global):
-        aux_distance = dist(x,val)
-        if aux_distance > distance:
-            distance = aux_distance
-            idx = i
-
-    return points_list_global.pop(idx),points_list_global
-
-# get the lagrangian variable v
-def get_lagragian_variables(tab,basis,n):
-    v = np.zeros(n)
-    for i,val in enumerate(basis):
-        if i == 0:
-            v[i] = tab[:,0][val]
-        elif i > 1:
-            v[val-1] = tab[:,0][val]
-    return v
-
-def change_negative_values(a,m):
-    min_a = min(a)-1
-    new_a = []
-    for i in range(0,m):
-        new_a.append(a[i]+abs(min_a))
-    
-    return new_a,min_a
-
 def get_column_simplex(tab,n,basis,row):
     vi = tab[row,1:10]
     value_row = tab[row,0]
@@ -71,10 +27,10 @@ def simplex(tab,n):
         if iterator == 1:
             row = 0
             column = 2+n
-        if iterator == 2:
+        elif iterator == 2:
             row = 1
             column = 2+n-1
-        if iterator > 2:
+        else:
             row = np.argmin(tab[:,0], axis=0)
             column = get_column_simplex(tab,n,basis,row)
         
@@ -148,7 +104,7 @@ def algorithm(ax_points,ay_points,ax_global,ay_global,n,points_list_global):
         # get the lagrangian variable v
         v = get_lagragian_variables(tab,basis,n+2)
 
-        # get radius
+        # get center and radius
         x,radius = get_radius(ax_points,ay_points,v,basis,n+2)
         
         if all_points_in_sphere(x,radius,ax_global,ay_global,points_list_global):
@@ -183,5 +139,10 @@ def algorithm(ax_points,ay_points,ax_global,ay_global,n,points_list_global):
                 
                 ax_points.append(next_point[0])
                 ay_points.append(next_point[1])
+        
+        if it > 100:
+            stop = True
+
         it = it + 1
+
     return [x[0],x[1]],radius,it
