@@ -91,7 +91,7 @@ if there_is_negative_values_in_x:
 if there_is_negative_values_in_y:
     result[1]=result[1]+adjust_y
 print(" ")
-print("### Result Hear Algorithim: ####")
+print("### Result Hearn Algorithim: ####")
 print("center: ",result)
 print("radius: ",radius)
 print("time: ",t2_stop) 
