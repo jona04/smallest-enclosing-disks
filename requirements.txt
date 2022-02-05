@@ -1,0 +1,10 @@
+matplotlib==3.4.1
+numpy==1.19.1
+cycler==0.11.0
+kiwisolver==1.3.2
+matplotlib==3.4.1
+numpy==1.19.1
+Pillow==9.0.1
+pyparsing==3.0.7
+python-dateutil==2.8.2
+six==1.16.0

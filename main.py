@@ -45,14 +45,14 @@ if len(points[0]) < 500: # neccessary to avoid error in recursive limit operatio
     '''
     Code block responsable to generate results of Welzl Algorithm
     '''
-    # fig, axes = plt.subplots()
-    # earth = plt.Circle((result_welzl[0]),result_welzl[1], color = 'blue',fill=False )
-    # plt.gca().set_aspect('equal', adjustable='box')
-    # axes.add_patch(earth)
-    # plt.scatter(points[0], points[1])
-    # plt.title("Welzl Algorithm (Recursive Approach)")
-    # plt.xlabel("Axis x")
-    # plt.ylabel("Axis y")
+    fig, axes = plt.subplots()
+    earth = plt.Circle((result_welzl[0]),result_welzl[1], color = 'blue',fill=False )
+    plt.gca().set_aspect('equal', adjustable='box')
+    axes.add_patch(earth)
+    plt.scatter(points[0], points[1])
+    plt.title("Welzl Algorithm (Recursive Approach)")
+    plt.xlabel("Axis x")
+    plt.ylabel("Axis y")
 
 
 

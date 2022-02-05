@@ -94,9 +94,13 @@ def simplex(tab,n):
         if iterator > 2:
             if any(val < 0 for val in tab[:,0]) == False:
                 stop = True
-            
+
+        if iterator > 100:
+            print("max iterations reached!")
+            return tab,basis
+                        
         iterator = iterator + 1
-    
+
     return tab,basis
 
 
