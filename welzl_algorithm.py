@@ -3,20 +3,20 @@ from util import *
 
 
 def b_minidisk(P, R, n):
-    """ Method  responsible for
+    """ Recursive method to get a circle compose by a center and a radius
         
         Args:
-            P (): ss
-            R (): asasd
-            n (): asdasd
+            P (list): Points to be allocated inside of the circle
+            R (list): Points on the boudary of the circle
+            n (int): quantity of points
             
         Returns:
-            return
+            return a tuple as the center of a circle and the radius of the circle
     """
+    
     # basic case
     if (n == 0 or len(R) == 3) :
         return min_circle_trivial(R)
-     
  
     # get a random point
     idx = randint(0,n-1)

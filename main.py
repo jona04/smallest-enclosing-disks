@@ -30,13 +30,13 @@ points[1] = [float(x) for x in points[1]]
 '''
 Code block responsible to execute Welzl algorithm
 '''
-if len(points[0]) < 500: # neccessary to avoid error in recursive limit operations
+if len(points[0]) <= 500: # neccessary to avoid error in recursive limit operations
     xy = list(zip(points[0], points[1]))
     t1_start = process_time()
     result_welzl = minidisk(xy)
     t1_stop = process_time()
     print(" ")
-    print("### Result Hear Algorithim: ####")
+    print("### Result Welzl Algorithim: ####")
     print("center: ",result_welzl[0])
     print("radius: ",result_welzl[1])
     print("time: ",t1_stop) 
@@ -63,19 +63,10 @@ ax_global = points[0]
 ay_global = points[1]
 m = len(ax_global)
 n = 2
-there_is_negative_values_in_x = any(n < 0 for n in ax_global)
-there_is_negative_values_in_y = any(n < 0 for n in ay_global)
 
-adjust_x = 0
-adjust_y = 0
-if there_is_negative_values_in_x:
-    ax_global,adjust_x = change_negative_values(ax_global,m)
-if there_is_negative_values_in_y:
-    ay_global,adjust_y = change_negative_values(ay_global,m)
+adjust_x,adjust_y,ax_global,ay_global = check_negative_values(ax_global,ay_global,m)
 
-points_list_global = []
-for i in range(n+2,m):
-    points_list_global.append((ax_global[i],ay_global[i]))
+points_list_global = [(ax_global[i],ay_global[i]) for i in range(n+2,m)]
 
 ax_points = []
 ay_points = []
@@ -86,10 +77,9 @@ for i in range(0,n+2):
 t2_start = process_time()
 result,radius,it = algorithm(ax_points,ay_points,ax_global,ay_global,n,points_list_global)
 t2_stop = process_time()
-if there_is_negative_values_in_x:
-    result[0]=result[0]+adjust_x
-if there_is_negative_values_in_y:
-    result[1]=result[1]+adjust_y
+result[0]=result[0]+adjust_x
+result[1]=result[1]+adjust_y
+
 print(" ")
 print("### Result Hearn Algorithim: ####")
 print("center: ",result)

@@ -3,6 +3,121 @@ from math import sqrt
 import numpy as np
 
 
+def update_tableau_with_new_point(basis,ax_points,ay_points,next_point,n):
+    v_in_basis = [ x - n-2-2 for x in basis.values() if x > 5 ]
+    no_in_basis = np.setdiff1d([0,1,2,3],v_in_basis)
+
+    if len(no_in_basis) == 1:
+        ax_points.pop(v_in_basis[0])
+        ay_points.pop(v_in_basis[0])
+    else:
+        ax_points.pop(no_in_basis[0])
+        ay_points.pop(no_in_basis[0])
+
+    ax_points.append(next_point[0])
+    ay_points.append(next_point[1])
+
+    return ax_points,ay_points
+
+def check_negative_values(ax_global,ay_global,m):
+    adjust_x = 0
+    adjust_y = 0
+    if any(n < 0 for n in ax_global):
+        ax_global,adjust_x = change_negative_values(ax_global,m)
+    if any(n < 0 for n in ay_global):
+        ay_global,adjust_y = change_negative_values(ay_global,m)
+
+    return adjust_x,adjust_y,ax_global,ay_global
+
+
+def simplex(tab,n):
+    
+    stop = False
+    iterator = 1
+    basis = {}
+    while stop == False:
+        if iterator == 1:
+            row = 0
+            column = 2+n
+        elif iterator == 2:
+            row = 1
+            column = 2+n-1
+        else:
+            row = np.argmin(tab[:,0], axis=0)
+            column = get_column_simplex(tab,n,basis,row)
+        
+        basis[row] = column
+        
+        pivotDenom = tab[row][column]
+        tab[row] = [x / pivotDenom for x in tab[row]]
+
+        for k,line in enumerate(tab):
+            if k != row:
+                pivotRowMultiple = [y * tab[k][column] for y in tab[row]]
+                tab[k] = [x - y for x,y in zip(tab[k], pivotRowMultiple)]
+               
+        if iterator > 2:
+            if any(val < 0 for val in tab[:,0]) == False:
+                stop = True
+
+        # max iterations
+        if iterator > 100:
+            print("max iterations reached!")
+            return tab,basis
+        
+        iterator = iterator + 1
+
+    return tab,basis
+
+
+def create_tableau(ax_,ay_,n):
+    value_column = [[1]]
+    for i in range(0,n):
+        value_column.append( [(ax_[i]**2 + ay_[i]**2) * -1])
+    value_column = np.asarray(value_column)
+
+    i = np.identity(n)
+    v_zeros = np.zeros(n)
+    ui = np.concatenate(([v_zeros],i), axis=0)
+    
+    v_ones = np.ones((n,1))
+    one_zero = np.zeros(1)
+    w = np.concatenate(([one_zero],v_ones), axis=0)
+    
+    v_matrix = [np.ones(n)]
+    for i in range(0,n):
+        v_line = []
+        for j in range(0,n):
+            v_line.append(-2* (ax_[i]*ax_[j]+ay_[i]*ay_[j]))
+        
+        v_line = np.asarray(v_line)
+        v_matrix = np.concatenate((v_matrix,[v_line]), axis=0)
+    
+    v_zeros_t = np.zeros((n,1))
+    one_one = np.ones(1)
+    y = np.concatenate(([one_one],v_zeros_t), axis=0)
+    
+    value_ui = np.c_[value_column,ui]
+    w_vi = np.c_[w,v_matrix]
+    w_vi_y = np.c_[w_vi,y]
+    return np.c_[value_ui,w_vi_y]
+
+
+def get_column_simplex(tab,n,basis,row):
+    vi = tab[row,1:10]
+    value_row = tab[row,0]
+    div = -100
+    new_column = 0
+    for i,val in enumerate(vi):
+        col = 1+i
+        if col not in basis.values():
+            div_aux = val/value_row
+            if div_aux > 0 and div_aux > div:
+                div = div_aux
+                new_column = col
+    return new_column
+
+
 def all_points_in_sphere(x,radius,ax_global,ay_global,points_list_global):
     flag = True
 #     check if all points is inside
@@ -38,11 +153,6 @@ def dist(a, b):
 # or on the boundaries of the circle
 def is_inside(center,radius, p):
     return dist(center, p) <= radius
-
-
-# To find the equation of the circle when
-# three points are given.
- 
 
 def get_point_outside_of_the_circle(x,radius,ax_global,ay_global):
     tuple_a = zip(ax_global, ay_global)
@@ -88,7 +198,7 @@ def change_negative_values(a,m):
     
     return new_a,min_a
 
-    
+
 def get_radius(ax_,ay_,v,basis,n):
     
     # Function to return a unique circle that
