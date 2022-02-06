@@ -9,7 +9,9 @@ from sys import argv
 
 
 if len(argv) < 2:
-    print('Usage: python3 ./main.py <file-with-points>')
+    print('Usage:')
+    print('First: python generate_points.py <number-of-data-points>')
+    print('Second: python start.py <file-with-points>')
     exit(1)
 
 '''

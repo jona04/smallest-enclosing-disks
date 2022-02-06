@@ -18,7 +18,7 @@ python3 ./genarate_points.py <quantity of points>
 
 ## Usage
 ```sh
-python3 ./main.py <file-with-points>
+python3 ./start.py <file-with-points>
 ```
 
 
